@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoundWave - Auriculares Inalámbricos</title>
+    <style>
+        /* Reseteo básico */
+        * {
+            margin: 0;
+            padding: 0;
+            
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Variables de colores - Paleta fría con marrones, blancos y negros */
+        :root {
+            --color-primario: #2A2A2A;
+            --color-secundario: #6B4B35;
+            --color-acento: #A67C52;
+            --color-oscuro: #1A1A1A;
+            --color-claro: #FFFFFF;
+            --color-gris: #E0E0E0;
+            --color-gradiente1: #2A2A2A;
+            --color-gradiente2: #3D3D3D;
+        }
+
+        /* Estilos generales */
+        body {
+            background-color: var(--color-claro);
+            color: var(--color-oscuro);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navegación */
+        .navbar {
+            background: linear-gradient(135deg, var(--color-gradiente1), var(--color-gradiente2));
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.2);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--color-claro);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--color-acento);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: var(--color-claro);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-acento);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--color-acento);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cart-icon {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: var(--color-acento);
+            color: var(--color-claro);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background-image: url('/api/placeholder/1200/800');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            margin-top: 70px;
+            position: relative;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(42, 42, 42, 0.8), rgba(61, 61, 61, 0.8));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: var(--color-claro);
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 300;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: var(--color-acento);
+            color: var(--color-claro);
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 0;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.7s ease;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        /* Características */
+        .features {
+            padding: 100px 0;
+            background-color: var(--color-gris);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            color: var(--color-oscuro);
+            position: relative;
+            font-weight: 300;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: this;
+            background-color: var(--color-acento);
+        }
+
+        .feature-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            background: var(--color-claro);
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-bottom: 3px solid var(--color-acento);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--color-secundario);
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--color-oscuro);
+            font-weight: 500;
+        }
+
+        .feature-desc {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Productos */
+        .products {
+            padding: 100px 0;
+            background-color: var(--color-claro);
+            position: relative;
+        }
+
+        .product-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .product-card {
+            background: var(--color-claro);
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(42, 42, 42, 0.05), rgba(166, 124, 82, 0.05));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .product-card:hover::before {
+            opacity: 1;
+        }
+
+        .product-image {
+            height: 300px;
+            background-image: url('/api/placeholder/400/300');
+            background-size: cover;
+            background-position: center;
+            transition: all 0.5s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 25px;
+            border-top: 1px solid #eee;
+        }
+
+        .product-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--color-oscuro);
+            font-weight: 500;
+        }
+
+        .product-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--color-secundario);
+            margin-bottom: 15px;
+        }
+
+        .add-to-cart {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--color-oscuro);
+            color: var(--color-claro);
+            text-decoration: none;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            border: 1px solid var(--color-oscuro);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        .add-to-cart:hover {
+            background-color: transparent;
+            color: var(--color-oscuro);
+        }
+
+        /* Call to action */
+        .cta {
+            padding: 120px 0;
+            background-image: url('/api/placeholder/1200/600');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            text-align: center;
+        }
+
+        .cta-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(42, 42, 42, 0.9), rgba(61, 61, 61, 0.9));
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            font-weight: 300;
+        }
+
+        .cta-text {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--color-oscuro);
+            color: white;
+            padding: 80px 0 30px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            position: relative;
+            display: inline-block;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--color-acento);
+        }
+
+        .footer-column p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #aaa;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .footer-links a::before {
+            content: '>';
+            margin-right: 8px;
+            opacity: 0;
+            transform: translateX(-10px);
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--color-claro);
+        }
+
+        .footer-links a:hover::before {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .footer-copyright {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        /* Formulario de pago */
+        .payment-form {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-left: 3px solid var(--color-acento);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 400;
+            color: #aaa;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--color-claro);
+            font-size: 16px;
+        }
+
+        .form-control::placeholder {
+            color: rgba(255,255,255,0.3);
+        }
+
+        /* Componentes futuristas */
+        .futuristic-element {
+            position: absolute;
+            background-color: var(--color-acento);
+            opacity: 0.05;
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .element-1 {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            left: -150px;
+        }
+
+        .element-2 {
+            width: 200px;
+            height: 200px;
+            bottom: -100px;
+            right: -100px;
+        }
+
+        /* Líneas decorativas */
+        .decorative-line {
+            position: absolute;
+            width: 100px;
+            height: 1px;
+            background-color: var(--color-acento);
+            z-index: 1;
+        }
+
+        .line-1 {
+            top: 20%;
+            left: 0;
+        }
+
+        .line-2 {
+            top: 60%;
+            right: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+                letter-spacing: 5px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+                letter-spacing: 3px;
+            }
+            
+            .cta-title {
+                font-size: 2.2rem;
+                letter-spacing: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navegación -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">SOUND<span>WAVE</span></a>
+            <ul class="nav-links">
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#productos">Productos</a></li>
+                <li><a href="#caracteristicas">Características</a></li>
+                <li><a href="#" class="cart-icon">Carrito <span class="cart-count">0</span></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <h1 class="hero-title">MÁS ALLÁ DEL CABLE</h1>
+            <p class="hero-subtitle">Descubre la libertad con nuestros auriculares inalámbricos. Diseño clásico, tecnología futurista.</p>
+            <a href="#productos" class="btn">Explorar colección</a>
+        </div>
+    </section>
+
+    <!-- Características -->
+    <section class="features" id="caracteristicas">
+        <div class="container">
+            <h2 class="section-title">Experiencia auditiva</h2>
+            <div class="feature-container">
+                <div class="feature-card">
+                    <div class="feature-icon">🔋</div>
+                    <h3 class="feature-title">Autonomía excepcional</h3>
+                    <p class="feature-desc">Hasta 48 horas de reproducción continua con una sola carga. La libertad en su máxima expresión.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎵</div>
+                    <h3 class="feature-title">Sonido de alta fidelidad</h3>
+                    <p class="feature-desc">Graves profundos y agudos cristalinos. La pureza del sonido sin distorsiones.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💧</div>
+                    <h3 class="feature-title">Resistencia IPX7</h3>
+                    <p class="feature-desc">Impermeables y duraderos. Diseñados para acompañarte en cualquier situación.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Productos -->
+    <section class="products" id="productos">
+        <div class="futuristic-element element-1"></div>
+        <div class="decorative-line line-1"></div>
+        <div class="container">
+            <h2 class="section-title">Nuestras creaciones</h2>
+            <div class="product-container">
+                <div class="product-card">
+                    <div class="product-image"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Obsidian Pro</h3>
+                        <p class="product-price">€129.99</p>
+                        <a href="#" class="add-to-cart">Añadir al carrito</a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Umber Air</h3>
+                        <p class="product-price">€99.99</p>
+                        <a href="#" class="add-to-cart">Añadir al carrito</a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Sepia Sport</h3>
+                        <p class="product-price">€79.99</p>
+                        <a href="#" class="add-to-cart">Añadir al carrito</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="futuristic-element element-2"></div>
+        <div class="decorative-line line-2"></div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta">
+        <div class="cta-overlay"></div>
+        <div class="container cta-content">
+            <h2 class="cta-title">Libertad sonora</h2>
+            <p class="cta-text">La fusión entre el diseño clásico y la tecnología del mañana. Nuestros auriculares inalámbricos redefinen lo que significa escuchar música.</p>
+            <a href="#" class="btn">Descubrir ahora</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-column">
+                <h3>SoundWave</h3>
+                <p>Elegancia y tecnología unidas en una experiencia auditiva superior. Nuestro compromiso: calidad sin compromisos.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Navegación</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#productos">Productos</a></li>
+                    <li><a href="#caracteristicas">Características</a></li>
+                    <li><a href="#">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Método de pago</h3>
+                <div class="payment-form">
+                    <div class="form-group">
+                        <label for="card-number">Número de tarjeta</label>
+                        <input type="text" id="card-number" class="form-control" placeholder="1234 5678 9012 3456">
+                    </div>
+                    <div class="form-group">
+                        <label for="card-name">Nombre en la tarjeta</label>
+                        <input type="text" id="card-name" class="form-control" placeholder="Juan Pérez">
+                    </div>
+                    <div class="form-group">
+                        <label for="card-expiry">Fecha de expiración</label>
+                        <input type="text" id="card-expiry" class="form-control" placeholder="MM/AA">
+                    </div>
+                    <div class="form-group">
+                        <label for="card-cvc">CVC</label>
+                        <input type="text" id="card-cvc" class="form-control" placeholder="123">
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">Finalizar compra</button>
+                </div>
+            </div>
+        </div>
+        <div class="container footer-copyright">
+            <p>© 2025 SoundWave. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Contador de carrito
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        const cartCount = document.querySelector('.cart-count');
+        let count = 0;
+        
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                count++;
+                cartCount.textContent = count;
+                
+                // Animación de añadir al carrito
+                this.textContent = "¡Añadido!";
+                this.style.backgroundColor = "#A67C52";
+                
+                setTimeout(() => {
+                    this.textContent = "Añadir al carrito";
+                    this.style.backgroundColor = "";
+                }, 1000);
+            });
+        });
+        
+        // Efecto de scroll suave
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
